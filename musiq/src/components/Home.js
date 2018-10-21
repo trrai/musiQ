@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button, CardTitle } from 'reactstrap';
-import { Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class MusiQHome extends Component {
     render() {

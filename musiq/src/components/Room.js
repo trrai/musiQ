@@ -32,7 +32,7 @@ class MusiQRoom extends Component {
             if (snapshot.val() != null) {
                 console.log(snapshot.val());
                 this.setState({ ids: snapshot.val() });
-                this.setState({ currentSongId: snapshot.val()[Object.keys(snapshot.val())[0]]["id"]})
+                this.setState({ currentSongId: snapshot.val()[Object.keys(snapshot.val())[0]]["id"] })
                 this.playSong();
             }
         });
@@ -42,7 +42,7 @@ class MusiQRoom extends Component {
     componentWillUnmount() {
         this.qRef.off();
     }
-    
+
     handleSearch(event) {
         event.preventDefault(); //don't submit
         let returned = Controller.search(this.state.searchTerm, 5, this.props.api)
@@ -90,48 +90,47 @@ class MusiQRoom extends Component {
         console.log(newSong);
     }
 
-    pauseSong(){
+    pauseSong() {
         this.props.api.pause({
-            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b"
+            device_id: "12bf54547387c7080517cec8b9675ffa6a57534b"
         });
     }
 
     playSong() {
         this.props.api.play({
-            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b",
+            device_id: "12bf54547387c7080517cec8b9675ffa6a57534b",
             uris: [
                 "spotify:track:" + this.state.currentSongId
-              ],
+            ],
         });
     }
 
-    playbackState(){
+    playbackState() {
         this.props.api.getMyCurrentPlaybackState({
-            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b"
-        }).then(function(response){
+            device_id: "12bf54547387c7080517cec8b9675ffa6a57534b"
+        }).then(function (response) {
             console.log(response);
         });
     }
 
-    updatePlaybackState(){
+    updatePlaybackState() {
         console.log('here');
         var self = this;
         this.props.api.getMyCurrentPlaybackState({
-            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b"
-        }).then(function(response){
-            if(response.item != null){
-                var currCompletion = response.progress_ms/response.item.duration_ms;
-                console.log(currCompletion);
-                console.log(currCompletion >= 0.10);
-                if(currCompletion >= 0.10){
+            device_id: "12bf54547387c7080517cec8b9675ffa6a57534b"
+        }).then(function (response) {
+            if (response.item != null) {
+                var currCompletion = response.progress_ms / response.item.duration_ms;
+                
+                if (currCompletion >= 0.07) {
                     firebase.database().ref('rooms/' + self.state.roomId + "/songs/" + Object.keys(self.state.ids)[0]).remove()
-                    .then(function(){
-                        self.setState({playbackCompletion : 0});
-                        self.playSong();
-                    });
-                    
-                }else{
-                    self.setState({playbackCompletion : currCompletion});
+                        .then(function () {
+                            self.setState({ playbackCompletion: 0 });
+                            self.playSong();
+                        });
+
+                } else {
+                    self.setState({ playbackCompletion: currCompletion });
                 }
             }
         });
@@ -149,12 +148,10 @@ class MusiQRoom extends Component {
 
             return <div>
 
-                <Button onClick={() => this.playSong()} >PLAY</Button>
-                <Button onClick={() => this.pauseSong()} >PAUSE</Button>
-                <Button onClick={() => this.playbackState()} >STATE</Button>
-                <form>
+                
+                <form className="form-room">
                     <FormGroup>
-                        <Label for="searchTerm">Search</Label>
+                        <Label for="searchTerm">Search for music</Label>
                         <Input
                             role="textbox"
                             id="searchTerm"
@@ -174,29 +171,36 @@ class MusiQRoom extends Component {
                         </Button>
                     </FormGroup>
 
+                    <Button onClick={() => this.playSong()} >
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJVSURBVGhD7Zo7aBRBHIdX8Y2IqCgoRA0GFR+NdmoqbZNGEQVJE9A2pPMBVgrBUrBUsFFLLUTQQrtopZ02SUREGwUFHxHB77eTCcOQPXa5ud2ZuB983NxyyfFn5zc7j8taWlqCsRPXmWbanMWPeDp/lzAq5NecT3E3JokKmcEBfIK/8RquxqSwhVhO4QecwiFdSAW/ELEWb+AffIg7MHrcQh7joGnmHMAX+AMv4QqMFreQPlxumtkqXIpLcAQ/41s8jlHiFjKMm00zu4ujppmzHm/hX7yHWzEq3EKu40HTnL8jYsOc4jC+wm84hsswChYKu4/yIS0q8AJ+xdd4BBunU9gXYgvuN828G95BdbfbuAkboyjsRShH6oIux/ANfsHzaLtkrRSFvQz6rP5GKCvj+B0n8RDWSlHYy6DP+ndnGz5AdbebqNGuFsqEvQwb8aJp5pzAd/gJz6GeRz2latiL8AsRK/EKambwHPdhz6ga9jKoAD1Q9Sr68RHO4gRqLhecbsJehEYtzQr80Uv/X9/1Hk/qQki6CXtZ1GW3m2a2BvU9Wvfo+i4MQqiwd0K587vsXnyGP/Eqdr2QCxX2qvS0kFBh70QtXStU2ItIPux2+NXSuZbhNzSNPRBDhr3RKUqIsEcxaewm7O40/iUmNY23RLewqoruXpRL3bJh9zcfjmLjVA273Q5SFqLdDuoUdneD7j4ms0FnSXLL1Ef7V3YT+zIms4ltcY8VNEfSOWP0+IXYg55pTPKgZ1EcvbmHoXswSVSIjqfP5O8SZtH8YKCl5f8jy/4BI7OhbNIoiAEAAAAASUVORK5CYII="></img></Button>
+               
                 </form>
 
-                <h2>Search Results: </h2>
-                {
-                    Object.keys(this.state.searchRes).map((objId) => {
-                        return <SearchResult
-                            name={this.state.searchRes[objId]["name"]}
-                            artist={this.state.searchRes[objId]["artist"]}
-                            callback={() => this.addToQueue(this.state.searchRes[objId])}
-                            add={true}
-                        />
-                    })
-                }
-                <h2>In Queue: </h2>
-                {
-                    Object.keys(this.state.ids).map((objId) => {
-                        return <SearchResult
-                            name={this.state.ids[objId]["name"]}
-                            artist={this.state.ids[objId]["artist"]}
-                            add={false}
-                        />
-                    })
-                }
+                <div className="results">
+                    <h2>Search Results: </h2>
+                    {
+                        Object.keys(this.state.searchRes).map((objId) => {
+                            return <SearchResult
+                                name={this.state.searchRes[objId]["name"]}
+                                artist={this.state.searchRes[objId]["artist"]}
+                                callback={() => this.addToQueue(this.state.searchRes[objId])}
+                                add={true}
+                            />
+                        })
+                    }
+                </div>
+                <div className="queue">
+                    <h2>In Queue: </h2>
+                    {
+                        Object.keys(this.state.ids).map((objId) => {
+                            return <SearchResult
+                                name={this.state.ids[objId]["name"]}
+                                artist={this.state.ids[objId]["artist"]}
+                                add={false}
+                            />
+                        })
+                    }
+                </div>
                 {/* 
                 {Object.keys(this.state.ids).length > 0 && 
                 <SpotifyPlayer

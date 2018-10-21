@@ -1,7 +1,3 @@
-'use strict'
-import React, { Component } from 'react';
-
-
 let controller = {
     promises: [],
 

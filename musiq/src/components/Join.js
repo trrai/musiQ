@@ -47,8 +47,7 @@ export default class MusiQJoin extends React.Component {
         let newFound = [];
         let txt = this.state.value;
         for (let i = 0; i < arr.length; i++) {
-            console.log(arr[i]);
-            console.log(this.state.availableRooms[arr[i]]);
+
             let currentName = this.state.availableRooms[arr[i]]["name"];
 
             if (currentName.toLowerCase().includes(txt.toLowerCase())) {
@@ -80,6 +79,7 @@ export default class MusiQJoin extends React.Component {
                         })}
                     </div>
                 </Form>
+                <div className="hidden"></div>
             </div>
         );
     }

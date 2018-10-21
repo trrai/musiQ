@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; //import React Component
 import { FormFeedback, Alert, FormGroup, Label, Input, Button } from 'reactstrap'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 // Form used to log in the user with their credentials
 class SignInForm extends Component {
@@ -83,7 +83,7 @@ class SignInForm extends Component {
     // Only show if user is NOT logged in
     if (!this.props.user) {
       return (
-        <form>
+        <form className="form-sign">
 
           {/* email */}
           <FormGroup>
@@ -117,21 +117,26 @@ class SignInForm extends Component {
             }
           </FormGroup>
 
-          {/* buttons */}
-          <FormGroup>
-            <Button
-              role="button"
-              disabled={!emailValid || !passwordValid} color="success" onClick={(e) => this.handleSignIn(e)} >
-              Sign-in
-          </Button>
-          </FormGroup>
+          <div className="signInForm">
+            {/* buttons */}
+            <FormGroup>
+              <Button
+                role="button"
+                disabled={!emailValid || !passwordValid} color="success" onClick={(e) => this.handleSignIn(e)} >
+                Sign-in
+            </Button>
+            </FormGroup>
 
+            <FormGroup>
+              <Link to='/join'><Button role="button" color="info" className="button-annoying">Sign Up</Button></Link>
+            </FormGroup>
+          </div>
         </form>
       )
     }
     // Redirect if user is logged in
     else {
-        console.log("there is a user");
+      console.log("there is a user");
       return <Redirect to='/' />
     }
   }
