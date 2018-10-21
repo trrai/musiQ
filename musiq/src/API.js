@@ -5,10 +5,11 @@ import React, { Component } from 'react';
 let controller = {
     promises: [],
 
+
     search: function (searchText, count, s) {
         var prev = null;
         console.log("hit");
-        
+
         //window.location = "http://localhost:8888/";
         
         prev = s.searchTracks(searchText, { limit: count });
@@ -16,13 +17,13 @@ let controller = {
 
             // clean the promise so it doesn't call abort
             prev = null;
-
-            // ...render list of search results...
-            console.log(data)
-
+            return prev;
+            
         }, function (err) {
             console.error(err);
         });
+
+        return prev;
     }
 
 }

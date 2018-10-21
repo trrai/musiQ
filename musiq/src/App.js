@@ -2,61 +2,26 @@
 
 import React, { Component } from 'react'; //import React Component
 import './App.css';
-import MusiQ_Navbar from './components/navbar/navbar';
+import MusiQHome from './components/Home';
+import MusiQNavbar from './components/Navbar';
+import MusiQCreate from './components/Create';
+import MusiQRoom from './components/Room';
+import { Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 
 //Forms 
 import SignUpForm from './SignUp';
 import SignInForm from './SignIn';
 
-//Chat functionality
-//import { ConversationsList, NavDrawer } from './Chat'
-//import { ChatRoom } from './ChatRoom'
-
 //Firebase Imports
 import firebase, { storage } from 'firebase/app';
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
 import {
   Button, Card, CardSubtitle, Input,
   Container, Row, Col, ButtonGroup
 } from 'reactstrap';
 
-//API
-import Controller from './API.js'
-
-//Material UI Imports
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-
 import Spotify from 'spotify-web-api-js';
 var api = new Spotify();
-
-//md5 Import
-//import md5 from 'md5';
-
-//Additional Feature imports
-//import { EditPage } from './EditPage'
-//import { MatchPage } from './MatchPage'
-
-class TopHeader extends Component {
-  render() {
-
-    return (
-      <MuiThemeProvider>
-        <AppBar
-          className="mb-2"
-          title={this.props.title}
-          onLeftIconButtonTouchTap={() => this.props.toggleNavCallback()}
-          iconElementRight={<IconButton role="button" aria-label="show more"><MoreVertIcon /></IconButton>}
-          onRightIconButtonTouchTap={() => this.props.toggleFilterCallback()}
-        />
-      </MuiThemeProvider>
-    );
-  }
-}
+api.setAccessToken("BQB_Z0qi_zbTMI0BAG7ohFiiSLutVCHtmmQBjZmzzjRjqg_qyNJk1Cr9GB4nQ0Bsth3C8duFu11h5hNknrFN7ssmu_UaJL4bubAI_jZho1QXlBO44KPimuDE3Bi6xMxHGDvLloFPnd6gk_nxbvQp2PtpbXNEChWoam_74Q");
 
 class App extends Component {
 
@@ -67,11 +32,13 @@ class App extends Component {
     this.state = {
       loading: true,
       navOpen: false,
+      rooms: [],
       profileInput: {}
     };
 
   }
 
+  
   componentDidMount() {
 
     this.authUnRegFunc = firebase.auth().onAuthStateChanged((firebaseUser) => {
@@ -90,6 +57,12 @@ class App extends Component {
       console.log(this.state);
     });
 
+    this.convoRef = firebase.database().ref("rooms");
+      this.convoRef.on("value", (snapshot) => {
+        if (snapshot.val() !== null) {
+          this.setState({ rooms: snapshot.val() });
+        }
+      })
   }
 
   componentWillUnmount() {
@@ -132,35 +105,13 @@ class App extends Component {
 
   }
 
-  handleSearch(searchTerm){
-    let newGroup = {
-      name: "test",
-      time: firebase.database.ServerValue.TIMESTAMP
-    };
-
-    //gets a reference to messages of this conversation stored in firebase
-    let groups = firebase.database().ref('rooms/');
-
-    //adds the new message to firebase
-    groups.push(newGroup);
-
-    console.log("PUSSSHED");
-
-    Controller.search(searchTerm, 5, api);
-  }
-
   render() {
     let content = null;
 
     // Rendering content for when the route is signing up
     let renderSignUp = (routerProps) => {
       return <div>
-        <TopHeader
-          className="mb-4"
-          title="Sign Up!"
-          toggleNavCallback={() => this.toggleNav()}
-          toggleFilterCallback={() => this.toggleFilter()}
-        />
+        <MusiQNavbar />
         <h1> Sign Up </h1>
         <SignUpForm
           signUpCallback={(e, p, h, a, age, img, img2) => this.handleSignUp(e, p, h, a, age, img, img2)}
@@ -173,12 +124,7 @@ class App extends Component {
     let renderSignIn = (routerProps) => {
 
       return <div>
-        <TopHeader
-          className="mb-4"
-          title="Sign in!"
-          toggleNavCallback={() => this.toggleNav()}
-          toggleFilterCallback={() => this.toggleFilter()}
-        />
+        <MusiQNavbar />
         <SignInForm
           signInCallback={(e, p) => this.handleSignIn(e, p)}
           user={this.state.user}
@@ -190,21 +136,23 @@ class App extends Component {
 
     };
 
+    let renderCreate = (routerProps) => {
+      return <div>
+      <MusiQNavbar />
+      <MusiQCreate />
+      </div>
+    }
+
     let renderLanding = (routerProps) => {
 
       if (this.state.user) {
 
-        api.setAccessToken("BQAADYYKyVmIKiLzTh0J6I0RRsJKxAv17-LusE3MvGFnQTLROOwA5oECnkYCnohNjgqgJZCr0ceXxwC4LwtJNeznPTceC9AFMh9GeDaPaVl-qh8YI9AHJWgoHee9mPS1J7sPT8-51Dxjhky5ww_uBaE792pC9p_IiOn2SQ");
-
         return <div>
 
-          <MusiQ_Navbar />
+          <MusiQNavbar />
+          <MusiQHome />
           
-            <input
-              placeholder="Search for..."
-              
-            />
-            <button onClick={() => this.handleSearch("test")}>SKRT</button>
+          {/*<button onClick={() => this.handleSearch("test")}>SKRT</button>*/}
           
         </div>
 
@@ -212,6 +160,21 @@ class App extends Component {
         console.log("there is not a user")
         return <Redirect to='/signin' />
       }
+
+    };
+
+    let renderRoom = (routerProps) => {
+    
+        return <div>
+          <MusiQNavbar />
+          <MusiQRoom
+            {...routerProps}
+            user={this.state.user}
+            rooms={this.state.rooms}
+            api={api}
+          />
+        </div>
+     
 
     };
 
@@ -223,6 +186,8 @@ class App extends Component {
           <Route exact path='/' render={renderLanding} />
           <Route exact path='/join' render={renderSignUp} />
           <Route exact path='/signin' render={renderSignIn} />
+          <Route exact path='/create' render={renderCreate} />
+          <Route path='/room/:Id' render={renderRoom} />
         </Switch>
 
       </div>

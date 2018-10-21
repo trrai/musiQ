@@ -1,0 +1,55 @@
+#Q {
+  color: #9C89B8;
+}
+
+#title, #Q {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.form {
+  margin: 2rem 1rem;
+  padding: 1.2rem;
+  background-color: #B8BEDD;
+}
+
+.button-space {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Home {
+  background-color: #F0E6EF;
+  height: 40rem;
+  width: auto;
+  padding: 1rem;
+}
+
+h1, h1 > #Q {
+  font-size: 8rem;
+}
+
+h1 {
+  padding-top: 3rem;
+}
+
+h1, #subtitle {
+  text-align: center;
+  font-weight: bold;
+}
+
+.getStartedCard {
+  display: flex;
+  justify-content: center;
+  margin: 5rem 2rem;
+}
+
+#getStartedButton {
+  width: 10rem;
+  height: 2.5rem;
+}
+
+#subtitle {
+  margin-bottom: 2rem;
+}
+

@@ -10,10 +10,11 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
-export default class MusiQ_Navbar extends React.Component {
+export default class MusiQNavbar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -31,7 +32,7 @@ export default class MusiQ_Navbar extends React.Component {
         return (
             <div>
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">reactstrap</NavbarBrand>
+                    <Link to='/'><NavbarBrand>Musi<span id="Q">Q</span></NavbarBrand></Link>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
