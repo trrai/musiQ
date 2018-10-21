@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'; //import React Component
 import './App.css';
+import MusiQ_Navbar from './components/navbar/navbar';
 
 //Forms 
 import SignUpForm from './SignUp';
@@ -19,6 +20,8 @@ import {
   Container, Row, Col, ButtonGroup
 } from 'reactstrap';
 
+//API
+import Controller from './API.js'
 
 //Material UI Imports
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -27,6 +30,9 @@ import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
+import Spotify from 'spotify-web-api-js';
+var api = new Spotify();
 
 //md5 Import
 //import md5 from 'md5';
@@ -55,7 +61,9 @@ class TopHeader extends Component {
 class App extends Component {
 
   constructor(props) {
+
     super(props);
+
     this.state = {
       loading: true,
       navOpen: false,
@@ -68,7 +76,8 @@ class App extends Component {
 
     this.authUnRegFunc = firebase.auth().onAuthStateChanged((firebaseUser) => {
       if (firebaseUser) { //someone logged in
-        this.setState({ user: firebaseUser, loading: false, login: true, errorMessage: null});
+        console.log("LOGGED IN");
+        this.setState({ user: firebaseUser, loading: false, login: true, errorMessage: null });
         this.profileRef = firebase.database().ref("users/" + this.state.user.uid);
         this.profileRef.on("value", (snapshot) => {
           console.log(snapshot.val());
@@ -81,7 +90,14 @@ class App extends Component {
       console.log(this.state);
     });
 
-  } 
+  }
+
+  componentWillUnmount() {
+    this.authUnRegFunc();
+    this.usersRef.off();
+    this.profileRef.off();
+    this.convoRef.off();
+  }
 
   handleSignIn(email, password) {
     this.setState({ errorMessage: null }); //clear any old errors
@@ -98,7 +114,7 @@ class App extends Component {
       });
 
   }
-  
+
   handleSignUp(email, password, handle, userAge) {
 
     this.setState({ errorMessage: null, profileInput: { name: handle } }); //clear any old errors
@@ -114,6 +130,23 @@ class App extends Component {
         this.setState({ email: '', password: '' });
       });
 
+  }
+
+  handleSearch(searchTerm){
+    let newGroup = {
+      name: "test",
+      time: firebase.database.ServerValue.TIMESTAMP
+    };
+
+    //gets a reference to messages of this conversation stored in firebase
+    let groups = firebase.database().ref('rooms/');
+
+    //adds the new message to firebase
+    groups.push(newGroup);
+
+    console.log("PUSSSHED");
+
+    Controller.search(searchTerm, 5, api);
   }
 
   render() {
@@ -161,9 +194,22 @@ class App extends Component {
 
       if (this.state.user) {
 
-        return <p>Skrt skrt you're logged in cudddddy</p>
+        api.setAccessToken("BQAADYYKyVmIKiLzTh0J6I0RRsJKxAv17-LusE3MvGFnQTLROOwA5oECnkYCnohNjgqgJZCr0ceXxwC4LwtJNeznPTceC9AFMh9GeDaPaVl-qh8YI9AHJWgoHee9mPS1J7sPT8-51Dxjhky5ww_uBaE792pC9p_IiOn2SQ");
+
+        return <div>
+
+          <MusiQ_Navbar />
+          
+            <input
+              placeholder="Search for..."
+              
+            />
+            <button onClick={() => this.handleSearch("test")}>SKRT</button>
+          
+        </div>
 
       } else {
+        console.log("there is not a user")
         return <Redirect to='/signin' />
       }
 
@@ -171,7 +217,7 @@ class App extends Component {
 
     content = (
 
-      <div className="container">
+      <div /* className="container" */>
 
         <Switch>
           <Route exact path='/' render={renderLanding} />
@@ -183,15 +229,15 @@ class App extends Component {
 
     );
 
-      return (
-        <div className="hundred_height">
-          {this.state.errorMessage &&
-            <p className="alert alert-danger">{this.state.errorMessage}</p>
-          }
-          {content}
-        </div>
-      );
-    
+    return (
+      <div className="hundred_height">
+        {this.state.errorMessage &&
+          <p className="alert alert-danger">{this.state.errorMessage}</p>
+        }
+        {content}
+      </div>
+    );
+
 
   }
 }

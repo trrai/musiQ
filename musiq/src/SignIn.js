@@ -131,6 +131,7 @@ class SignInForm extends Component {
     }
     // Redirect if user is logged in
     else {
+        console.log("there is a user");
       return <Redirect to='/' />
     }
   }
