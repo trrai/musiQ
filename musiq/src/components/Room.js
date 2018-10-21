@@ -7,6 +7,9 @@ import Controller from '../API.js'
 import firebase, { storage } from 'firebase/app';
 
 import SearchResult from './SearchResult';
+import Spotify from 'spotify-web-api-js';
+
+import BToken from '../API_TOKEN.js'
 
 class MusiQRoom extends Component {
 
@@ -17,6 +20,8 @@ class MusiQRoom extends Component {
             ids: [],
             roomId: this.props.match.params.Id,
             searchRes: [],
+            playbackCompletion: 0,
+            currentSongId: "",
         }; //initialize state
 
     }
@@ -27,8 +32,10 @@ class MusiQRoom extends Component {
             if (snapshot.val() != null) {
                 console.log(snapshot.val());
                 this.setState({ ids: snapshot.val() });
+                this.setState({ currentSongId: snapshot.val()[Object.keys(snapshot.val())[0]]["id"]})
             }
         });
+        this.interval = setInterval(() => this.updatePlaybackState(), 3000);
     }
 
     componentWillUnmount() {
@@ -42,7 +49,7 @@ class MusiQRoom extends Component {
         var self = this;
         returned.then(function (data) {
             data.tracks.items.forEach(element => {
-               
+
                 let song = {
                     name: element.name,
                     id: element.id,
@@ -82,6 +89,53 @@ class MusiQRoom extends Component {
         console.log(newSong);
     }
 
+    pauseSong(){
+        this.props.api.pause({
+            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b"
+        });
+    }
+
+    playSong() {
+        this.props.api.play({
+            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b",
+            uris: [
+                "spotify:track:" + this.state.currentSongId
+              ],
+        });
+    }
+
+    playbackState(){
+        this.props.api.getMyCurrentPlaybackState({
+            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b"
+        }).then(function(response){
+            console.log(response);
+        });
+    }
+
+    updatePlaybackState(){
+        console.log('here');
+        var self = this;
+        this.props.api.getMyCurrentPlaybackState({
+            device_id:"12bf54547387c7080517cec8b9675ffa6a57534b"
+        }).then(function(response){
+            if(response.item != null){
+                var currCompletion = response.progress_ms/response.item.duration_ms;
+                console.log(currCompletion);
+                console.log(currCompletion >= 0.10);
+                if(currCompletion >= 0.10){
+                    firebase.database().ref('rooms/' + self.state.roomId + "/songs/" + Object.keys(self.state.ids)[0]).remove()
+                    .then(function(){
+                        self.setState({playbackCompletion : 0});
+                        self.playSong();
+                    });
+                    
+                }else{
+                    self.setState({playbackCompletion : currCompletion});
+                }
+            }
+        });
+    }
+
     render() {
         if (this.props.user) {
 
@@ -93,6 +147,10 @@ class MusiQRoom extends Component {
             const theme = 'black'; // or 'white'
 
             return <div>
+
+                <Button onClick={() => this.playSong()} >PLAY</Button>
+                <Button onClick={() => this.pauseSong()} >PAUSE</Button>
+                <Button onClick={() => this.playbackState()} >STATE</Button>
                 <form>
                     <FormGroup>
                         <Label for="searchTerm">Search</Label>
@@ -121,10 +179,10 @@ class MusiQRoom extends Component {
                 {
                     Object.keys(this.state.searchRes).map((objId) => {
                         return <SearchResult
-                        name = {this.state.searchRes[objId]["name"]}
-                        artist = {this.state.searchRes[objId]["artist"]}
-                        callback = {() => this.addToQueue(this.state.searchRes[objId])}
-                        add = {true}
+                            name={this.state.searchRes[objId]["name"]}
+                            artist={this.state.searchRes[objId]["artist"]}
+                            callback={() => this.addToQueue(this.state.searchRes[objId])}
+                            add={true}
                         />
                     })
                 }
@@ -132,19 +190,22 @@ class MusiQRoom extends Component {
                 {
                     Object.keys(this.state.ids).map((objId) => {
                         return <SearchResult
-                        name = {this.state.ids[objId]["name"]}
-                        artist = {this.state.ids[objId]["artist"]}
-                        add = {false}
+                            name={this.state.ids[objId]["name"]}
+                            artist={this.state.ids[objId]["artist"]}
+                            add={false}
                         />
                     })
                 }
-
+                {/* 
+                {Object.keys(this.state.ids).length > 0 && 
                 <SpotifyPlayer
-                    uri={"spotify:track:" + this.state.ids[0]}
+                    uri={"spotify:track:" + this.state.ids[Object.keys(this.state.ids)[0]]["id"]}
                     size={size}
                     view={view}
                     theme={theme}
                 />
+                }
+                */}
 
             </div>
 

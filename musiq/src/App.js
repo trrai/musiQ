@@ -20,9 +20,11 @@ import {
   Container, Row, Col, ButtonGroup
 } from 'reactstrap';
 
+import BToken from './API_TOKEN.js'
+
 import Spotify from 'spotify-web-api-js';
 var api = new Spotify();
-api.setAccessToken("BQBHSYdIhOR4wR-mOazZmjUoyiRCrn6voJc6qJW1OCl1Q8_lHLN__MWc3ysbVk8ChqaEjiKNn3_jSVR1htQY4pvRURV9okhTx6Nb_l12L47uM-vu7rjAEY0wgIoIn8IiIcMy8X1dEPbz6yrsthXw1q30SEinbKDagZgyuyTY4Q");
+api.setAccessToken(BToken);
 
 class App extends Component {
 
