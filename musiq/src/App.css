@@ -8,14 +8,16 @@
 }
 
 .form {
-  margin: 2rem 1rem;
+  margin: 10rem 1rem;
   padding: 1.2rem;
   background-color: #B8BEDD;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .button-space {
-  display: flex;
-  justify-content: space-between;
+  margin-top: 1rem;
 }
 
 .Home {
@@ -38,10 +40,15 @@ h1, #subtitle {
   font-weight: bold;
 }
 
+#subtitle {
+  padding-bottom: 2rem;
+}
+
 .getStartedCard {
   display: flex;
   justify-content: center;
-  margin: 5rem 2rem;
+  padding-top: 1rem;
+  margin-top: 1rem;
 }
 
 #getStartedButton {
@@ -53,3 +60,59 @@ h1, #subtitle {
   margin-bottom: 2rem;
 }
 
+.btn-secondary {
+  background-color: #F0A6CA;
+  border-color: #F0A6CA;
+}
+
+.bg-light {
+  background-color: rgba(241, 241, 241, 0.5) !important;
+}
+
+.search {
+  height: max-content;
+  background-color: #9C89B8;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 3rem;
+}
+
+#searchName {
+  font-size: 40pt;
+  padding-bottom: 5rem;
+}
+
+#searchBar {
+  height: 15vh;
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 28pt;
+  border-color: #F0A6CA;
+  box-shadow: #F0A6CA;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.searchBar img {
+  height: 5rem;
+  width: 5rem;
+}
+
+#searchButton {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.label {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.roomCards {
+  margin: 1rem;
+}

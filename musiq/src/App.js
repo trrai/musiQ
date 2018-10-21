@@ -3,6 +3,7 @@ import './App.css';
 import MusiQHome from './components/Home';
 import MusiQNavbar from './components/Navbar';
 import MusiQCreate from './components/Create';
+import MusiQJoin from './components/Join';
 import { Router, Route, Link, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -33,11 +34,20 @@ class App extends Component {
         <MusiQCreate />
       </div>
     }
+
+    let renderJoin = (routerProps) => {
+      return <div>
+        <MusiQNavbar />
+        <MusiQJoin/>
+      </div>
+    }
+
     content = (
       <div>
         <Switch>
           <Route exact path='/' render={renderLanding} />
           <Route exact path='/create' render={renderCreate} />
+          <Route exact path='/join' render={renderJoin} />
         </Switch>
       </div>
     );
