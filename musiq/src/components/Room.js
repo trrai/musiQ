@@ -33,6 +33,7 @@ class MusiQRoom extends Component {
                 console.log(snapshot.val());
                 this.setState({ ids: snapshot.val() });
                 this.setState({ currentSongId: snapshot.val()[Object.keys(snapshot.val())[0]]["id"]})
+                this.playSong();
             }
         });
         this.interval = setInterval(() => this.updatePlaybackState(), 3000);
@@ -41,7 +42,7 @@ class MusiQRoom extends Component {
     componentWillUnmount() {
         this.qRef.off();
     }
-
+    
     handleSearch(event) {
         event.preventDefault(); //don't submit
         let returned = Controller.search(this.state.searchTerm, 5, this.props.api)
