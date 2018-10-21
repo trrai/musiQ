@@ -6,6 +6,7 @@ import MusiQHome from './components/Home';
 import MusiQNavbar from './components/Navbar';
 import MusiQCreate from './components/Create';
 import MusiQRoom from './components/Room';
+import MusiQJoin from './components/Join';
 import { Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 
 //Forms 
@@ -178,12 +179,20 @@ class App extends Component {
 
     };
 
+    let renderJoinRoom = (routerProps) => {
+      return <div>
+        <MusiQNavbar />
+        <MusiQJoin/>
+      </div>
+    }
+
     content = (
 
       <div /* className="container" */>
 
         <Switch>
           <Route exact path='/' render={renderLanding} />
+          <Route exact path='/joinroom' render={renderJoinRoom} />
           <Route exact path='/join' render={renderSignUp} />
           <Route exact path='/signin' render={renderSignIn} />
           <Route exact path='/create' render={renderCreate} />

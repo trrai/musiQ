@@ -14,7 +14,7 @@ class MusiQHome extends Component {
                 </Card>
                 <Card body className="getStartedCard">
                     <CardTitle>Find a room created by your friends, peers, or an establishment.</CardTitle>
-                    <Link to="/join"><Button id="getStartedButton">Find a room</Button></Link>
+                    <Link to="/joinroom"><Button id="getStartedButton">Find a room</Button></Link>
                 </Card>
             </div>
         );
