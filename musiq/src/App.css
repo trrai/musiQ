@@ -49,3 +49,7 @@ h1, #subtitle {
   height: 2.5rem;
 }
 
+#subtitle {
+  margin-bottom: 2rem;
+}
+
