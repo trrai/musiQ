@@ -12,7 +12,8 @@ export default class MusiQJoin extends React.Component {
         this.state = {
             value: '',
             availableRooms: [],
-            found: []
+            found: [],
+            searchRes: [],
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,13 +40,23 @@ export default class MusiQJoin extends React.Component {
 
     handleSearchBar(event) {
         event.preventDefault();
+        
         console.log(this.state.availableRooms);
-        let arr = ["Test1", "Test2", "Test3", "Test4"];
+        let arr = Object.keys(this.state.availableRooms);
+        console.log(arr);
         let newFound = [];
         let txt = this.state.value;
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i].toLowerCase().includes(txt.toLowerCase())) {
-                newFound.push(arr[i]);
+            console.log(arr[i]);
+            console.log(this.state.availableRooms[arr[i]]);
+            let currentName = this.state.availableRooms[arr[i]]["name"];
+
+            if (currentName.toLowerCase().includes(txt.toLowerCase())) {
+                newFound.push({
+                    name: this.state.availableRooms[arr[i]]["name"],
+                    password: this.state.availableRooms[arr[i]]["password"],
+                    id: arr[i]
+                });
             }
         }
         this.setState({ found: newFound });
@@ -65,7 +76,7 @@ export default class MusiQJoin extends React.Component {
                             </div>
                         </FormGroup>
                         {this.state.found.map((room) => {
-                            return <Modal key={room} name={room} />
+                            return <Modal {...this.props} key={room.id} room={room} />
                         })}
                     </div>
                 </Form>

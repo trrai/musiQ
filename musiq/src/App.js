@@ -22,7 +22,7 @@ import {
 
 import Spotify from 'spotify-web-api-js';
 var api = new Spotify();
-api.setAccessToken("BQB_Z0qi_zbTMI0BAG7ohFiiSLutVCHtmmQBjZmzzjRjqg_qyNJk1Cr9GB4nQ0Bsth3C8duFu11h5hNknrFN7ssmu_UaJL4bubAI_jZho1QXlBO44KPimuDE3Bi6xMxHGDvLloFPnd6gk_nxbvQp2PtpbXNEChWoam_74Q");
+api.setAccessToken("BQBHSYdIhOR4wR-mOazZmjUoyiRCrn6voJc6qJW1OCl1Q8_lHLN__MWc3ysbVk8ChqaEjiKNn3_jSVR1htQY4pvRURV9okhTx6Nb_l12L47uM-vu7rjAEY0wgIoIn8IiIcMy8X1dEPbz6yrsthXw1q30SEinbKDagZgyuyTY4Q");
 
 class App extends Component {
 
@@ -182,7 +182,9 @@ class App extends Component {
     let renderJoinRoom = (routerProps) => {
       return <div>
         <MusiQNavbar />
-        <MusiQJoin/>
+        <MusiQJoin 
+        {...routerProps}
+        />
       </div>
     }
 
