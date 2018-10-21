@@ -140,10 +140,6 @@ h1, #subtitle {
   color: white;
 }
 
-.mr-2 {
-  margin-left: 4vw;
-}
-
 a:not([href]):not([tabindex]) {
   color: black;
   text-decoration: none;
@@ -169,6 +165,13 @@ a:not([href]):not([tabindex]) {
 .roomCards:last-of-type {
   margin-bottom: 1rem;
 }
+
+.signInForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 
 @media only screen and (min-width: 600px) {
   .form {
@@ -241,9 +244,6 @@ a:not([href]):not([tabindex]) {
   #subtitle {
     font-size: 1.5rem;
   }
-
-
-
 } 
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */

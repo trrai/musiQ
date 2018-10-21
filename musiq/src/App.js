@@ -1,5 +1,3 @@
-'use strict';
-
 import React, { Component } from 'react'; //import React Component
 import './App.css';
 import MusiQHome from './components/Home';
@@ -7,7 +5,7 @@ import MusiQNavbar from './components/Navbar';
 import MusiQCreate from './components/Create';
 import MusiQRoom from './components/Room';
 import MusiQJoin from './components/Join';
-import { Router, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { Route, Link, Switch, Redirect } from 'react-router-dom';
 
 //Forms 
 import SignUpForm from './SignUp';
@@ -39,7 +37,7 @@ class App extends Component {
 
   }
 
-  
+
   componentDidMount() {
 
     this.authUnRegFunc = firebase.auth().onAuthStateChanged((firebaseUser) => {
@@ -59,11 +57,11 @@ class App extends Component {
     });
 
     this.convoRef = firebase.database().ref("rooms");
-      this.convoRef.on("value", (snapshot) => {
-        if (snapshot.val() !== null) {
-          this.setState({ rooms: snapshot.val() });
-        }
-      })
+    this.convoRef.on("value", (snapshot) => {
+      if (snapshot.val() !== null) {
+        this.setState({ rooms: snapshot.val() });
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -126,21 +124,20 @@ class App extends Component {
 
       return <div>
         <MusiQNavbar />
+        <h1>Sign In</h1>
         <SignInForm
           signInCallback={(e, p) => this.handleSignIn(e, p)}
           user={this.state.user}
         />
-        <Button role="button" color="info" className="mr-2">
-          <Link to='/join'>Sign Up</Link>
-        </Button>
+
       </div>
 
     };
 
     let renderCreate = (routerProps) => {
       return <div>
-      <MusiQNavbar />
-      <MusiQCreate />
+        <MusiQNavbar />
+        <MusiQCreate />
       </div>
     }
 
@@ -152,9 +149,9 @@ class App extends Component {
 
           <MusiQNavbar />
           <MusiQHome />
-          
+
           {/*<button onClick={() => this.handleSearch("test")}>SKRT</button>*/}
-          
+
         </div>
 
       } else {
@@ -165,24 +162,24 @@ class App extends Component {
     };
 
     let renderRoom = (routerProps) => {
-    
-        return <div>
-          <MusiQNavbar />
-          <MusiQRoom
-            {...routerProps}
-            user={this.state.user}
-            rooms={this.state.rooms}
-            api={api}
-          />
-        </div>
-     
+
+      return <div>
+        <MusiQNavbar />
+        <MusiQRoom
+          {...routerProps}
+          user={this.state.user}
+          rooms={this.state.rooms}
+          api={api}
+        />
+      </div>
+
 
     };
 
     let renderJoinRoom = (routerProps) => {
       return <div>
         <MusiQNavbar />
-        <MusiQJoin/>
+        <MusiQJoin />
       </div>
     }
 

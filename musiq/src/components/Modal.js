@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, Label, Button, Input, Form, FormGroup
-} from 'reactstrap';
+import {Card, CardBody, CardTitle, Label, Button, Input} from 'reactstrap';
 import '../App.css';
 
 const Modal = (props) => {

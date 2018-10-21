@@ -7,10 +7,6 @@ import {
     Nav,
     NavItem,
     NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -32,15 +28,18 @@ export default class MusiQNavbar extends React.Component {
         return (
             <div>
                 <Navbar color="light" light expand="md">
-                    <Link to='/'><NavbarBrand>Musi<span id="Q">Q</span></NavbarBrand></Link>
+                    <Link to="/"><NavbarBrand>Musi<span id="Q">Q</span></NavbarBrand></Link>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/create">Create</NavLink>
+                                <Link to="/create"><NavLink>Create</NavLink></Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/join">Join</NavLink>
+                                <Link to="/joinroom"><NavLink>Join</NavLink></Link>
+                            </NavItem>
+                            <NavItem>
+                                <Link to="/room"><NavLink>Queue</NavLink></Link>
                             </NavItem>
                         </Nav>
                     </Collapse>
