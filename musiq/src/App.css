@@ -1,32 +1,287 @@
-.App {
-  text-align: center;
+html {
+  height: 100%;
+  width: 100%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+#Q {
+  color: #9C89B8;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#title, #title > #Q {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.form {
+  padding: 1.2rem;
+  height: fill;
+  background-color: #B8BEDD;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+.button-space {
+  margin-top: 1rem;
+}
+
+.Home {
+  background-color: #F0E6EF;
+  height: 100%;
+  width: auto;
+  padding: 1rem;
+}
+
+h1, h1 > #Q {
+  font-size: 6rem;
+}
+
+h1 {
+  padding-top: 3rem;
+}
+
+h1, #subtitle {
+  text-align: center;
+  font-weight: bold;
+}
+
+#subtitle {
+  padding-bottom: 2rem;
+}
+
+.getStartedCard {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.getStartedCard:last-of-type {
+  margin-bottom: 15vh;
+}
+
+#getStartedButton {
+  width: 10rem;
+  height: 2.5rem;
+}
+
+#subtitle {
+  margin-bottom: 2rem;
+}
+
+.btn-secondary {
+  background-color: #F0A6CA;
+  border-color: #F0A6CA;
+}
+
+.bg-light {
+  background-color: rgba(241, 241, 241, 0.5) !important;
+}
+
+.search {
+  height: 100%;
+  background-color: #9C89B8;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 3rem;
+}
+
+#searchName {
+  font-size: 40pt;
+  padding-bottom: 5rem;
+}
+
+#searchBar {
+  height: 10vh;
+  width: 62vw;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20pt;
+  border-color: #F0A6CA;
+  box-shadow: #F0A6CA;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.searchBar img {
+  height: 4rem;
+  width: 4rem;
+}
+
+#searchButton {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.label {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.roomCards {
+  margin: 1rem;
+  text-align: left;
+}
+
+.roomCards button {
+  margin-top: 1rem;
+}
+
+.form-sign {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-2 a {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+a:not([href]):not([tabindex]) {
+  color: black;
+  text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.form-room {
+  background-color: #B8BEDD;
+  padding: 1rem;
+}
+
+.results, .queue {
+  background-color: #EFC3E6;
+}
+
+.results h2 {
+  margin-bottom: 0;
+}
+
+.queue:last-of-type, .results:last-of-type {
+  padding-bottom: 2vh;
+}
+
+.roomCards:last-of-type {
+  margin-bottom: 1rem;
+}
+
+.signInForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+@media only screen and (min-width: 600px) {
+  .form {
+    padding: 5rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .form-room {
+    padding: 2rem 3rem !important;
   }
+
+} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .getStartedCard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80vw;
+  }
+
+  .form {
+    padding: 5rem;
+    font-size: 1.5rem;
+  }
+
+  .form-room {
+    padding: 2rem 4rem !important;
+  }
+
+  #searchBar {
+    width: 100%;
+    font-size: 36pt;
+  }
+
+  #searchName {
+    font-size: 52pt;
+  }
+
+  .form-room, .results, .queue {
+    font-size: 1.5rem;
+  }
+
+  .form-sign {
+    padding: 5rem;
+  }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+  .form-sign {
+    padding: 10rem;
+  }
+
+  .form {
+    padding: 7rem;
+  }
+
+  .getStartedCard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70vw;
+  }
+
+  #title, #title > #Q {
+    font-size: 2rem;
+  }
+  
+  #subtitle {
+    font-size: 1.5rem;
+  }
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .getStartedCard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70vw;
+  }
+
+  .form {
+    padding: 12rem;
+    font-size: 1.5rem;
+  }
+
+  .form-room {
+    padding: 2rem 10rem !important;
+  }
+
+  #searchBar {
+    width: 100%;
+    font-size: 36pt;
+  }
+
+  #searchName {
+    font-size: 52pt;
+  }
+
+  .form-room, .results, .queue {
+    font-size: 2rem;
+  }
+
+  .results, .queue {
+    padding: 6rem;
+  }
+
+  .form-sign {
+    padding: 2rem 18rem 18rem 18rem;
+  }
+  
 }
