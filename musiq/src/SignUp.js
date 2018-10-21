@@ -10,7 +10,7 @@ class SignUpForm extends Component {
             email: undefined,
             password: undefined,
             handle: undefined,
-            
+
         }; //initialize state
     }
 
@@ -89,7 +89,7 @@ class SignUpForm extends Component {
         if (!this.props.user) {
             return (
 
-                <form>
+                <form className="form-sign">
                     <FormGroup>
                         <Label htmlFor="handle">Name</Label>
                         <Input

@@ -83,7 +83,7 @@ class SignInForm extends Component {
     // Only show if user is NOT logged in
     if (!this.props.user) {
       return (
-        <form>
+        <form className="form-sign">
 
           {/* email */}
           <FormGroup>
@@ -131,7 +131,7 @@ class SignInForm extends Component {
     }
     // Redirect if user is logged in
     else {
-        console.log("there is a user");
+      console.log("there is a user");
       return <Redirect to='/' />
     }
   }

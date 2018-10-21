@@ -42,7 +42,7 @@ class MusiQRoom extends Component {
         var self = this;
         returned.then(function (data) {
             data.tracks.items.forEach(element => {
-               
+
                 let song = {
                     name: element.name,
                     id: element.id,
@@ -93,9 +93,9 @@ class MusiQRoom extends Component {
             const theme = 'black'; // or 'white'
 
             return <div>
-                <form>
+                <form className="form-room">
                     <FormGroup>
-                        <Label for="searchTerm">Search</Label>
+                        <Label for="searchTerm">Search for music</Label>
                         <Input
                             role="textbox"
                             id="searchTerm"
@@ -117,27 +117,32 @@ class MusiQRoom extends Component {
 
                 </form>
 
-                <h2>Search Results: </h2>
-                {
-                    Object.keys(this.state.searchRes).map((objId) => {
-                        return <SearchResult
-                        name = {this.state.searchRes[objId]["name"]}
-                        artist = {this.state.searchRes[objId]["artist"]}
-                        callback = {() => this.addToQueue(this.state.searchRes[objId])}
-                        add = {true}
-                        />
-                    })
-                }
-                <h2>In Queue: </h2>
-                {
-                    Object.keys(this.state.ids).map((objId) => {
-                        return <SearchResult
-                        name = {this.state.ids[objId]["name"]}
-                        artist = {this.state.ids[objId]["artist"]}
-                        add = {false}
-                        />
-                    })
-                }
+                <div className="results">
+                    <h2>Search Results: </h2>
+                    {
+                        Object.keys(this.state.searchRes).map((objId) => {
+                            return <SearchResult
+                                name={this.state.searchRes[objId]["name"]}
+                                artist={this.state.searchRes[objId]["artist"]}
+                                callback={() => this.addToQueue(this.state.searchRes[objId])}
+                                add={true}
+                            />
+                        })
+                    }
+                </div>
+
+                <div className="queue">
+                    <h2>In Queue: </h2>
+                    {
+                        Object.keys(this.state.ids).map((objId) => {
+                            return <SearchResult
+                                name={this.state.ids[objId]["name"]}
+                                artist={this.state.ids[objId]["artist"]}
+                                add={false}
+                            />
+                        })
+                    }
+                </div>
 
                 <SpotifyPlayer
                     uri={"spotify:track:" + this.state.ids[0]}

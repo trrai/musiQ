@@ -1,19 +1,23 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 #Q {
   color: #9C89B8;
 }
 
-#title, #Q {
+#title, #title > #Q {
   font-weight: bold;
   font-size: 1.5rem;
 }
 
 .form {
-  margin: 4rem 1rem;
   padding: 1.2rem;
+  height: fill;
   background-color: #B8BEDD;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
 }
 
 .button-space {
@@ -22,7 +26,7 @@
 
 .Home {
   background-color: #F0E6EF;
-  height: max-content;
+  height: 100%;
   width: auto;
   padding: 1rem;
 }
@@ -74,7 +78,7 @@ h1, #subtitle {
 }
 
 .search {
-  height: max-content;
+  height: 100%;
   background-color: #9C89B8;
   text-align: center;
   font-weight: bold;
@@ -87,11 +91,11 @@ h1, #subtitle {
 }
 
 #searchBar {
-  height: 15vh;
-  width: 70vw;
+  height: 10vh;
+  width: 62vw;
   margin-left: auto;
   margin-right: auto;
-  font-size: 28pt;
+  font-size: 20pt;
   border-color: #F0A6CA;
   box-shadow: #F0A6CA;
 }
@@ -103,8 +107,8 @@ h1, #subtitle {
 }
 
 .searchBar img {
-  height: 5rem;
-  width: 5rem;
+  height: 4rem;
+  width: 4rem;
 }
 
 #searchButton {
@@ -119,8 +123,165 @@ h1, #subtitle {
 
 .roomCards {
   margin: 1rem;
+  text-align: left;
 }
 
-form {
+.roomCards button {
+  margin-top: 1rem;
+}
+
+.form-sign {
   padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-2 a {
+  color: white;
+}
+
+.mr-2 {
+  margin-left: 4vw;
+}
+
+a:not([href]):not([tabindex]) {
+  color: black;
+  text-decoration: none;
+}
+
+.form-room {
+  background-color: #B8BEDD;
+  padding: 1rem;
+}
+
+.results, .queue {
+  background-color: #EFC3E6;
+}
+
+.results h2 {
+  margin-bottom: 0;
+}
+
+.queue:last-of-type, .results:last-of-type {
+  padding-bottom: 2vh;
+}
+
+.roomCards:last-of-type {
+  margin-bottom: 1rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .form {
+    padding: 5rem;
+  }
+
+  .form-room {
+    padding: 2rem 3rem !important;
+  }
+
+} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .getStartedCard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80vw;
+  }
+
+  .form {
+    padding: 5rem;
+    font-size: 1.5rem;
+  }
+
+  .form-room {
+    padding: 2rem 4rem !important;
+  }
+
+  #searchBar {
+    width: 100%;
+    font-size: 36pt;
+  }
+
+  #searchName {
+    font-size: 52pt;
+  }
+
+  .form-room, .results, .queue {
+    font-size: 1.5rem;
+  }
+
+  .form-sign {
+    padding: 5rem;
+  }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+  .form-sign {
+    padding: 10rem;
+  }
+
+  .form {
+    padding: 7rem;
+  }
+
+  .getStartedCard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70vw;
+  }
+
+  #title, #title > #Q {
+    font-size: 2rem;
+  }
+  
+  #subtitle {
+    font-size: 1.5rem;
+  }
+
+
+
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .getStartedCard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70vw;
+  }
+
+  .form {
+    padding: 12rem;
+    font-size: 1.5rem;
+  }
+
+  .form-room {
+    padding: 2rem 10rem !important;
+  }
+
+  #searchBar {
+    width: 100%;
+    font-size: 36pt;
+  }
+
+  #searchName {
+    font-size: 52pt;
+  }
+
+  .form-room, .results, .queue {
+    font-size: 2rem;
+  }
+
+  .results, .queue {
+    padding: 6rem;
+  }
+
+  .form-sign {
+    padding: 2rem 18rem 18rem 18rem;
+  }
+  
 }

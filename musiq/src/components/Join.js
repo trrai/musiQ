@@ -3,6 +3,7 @@ import { Router, Route, Link } from 'react-router-dom';
 import searchIcon from '../img/search.svg';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import Modal from './Modal';
+import firebase, { storage } from 'firebase/app';
 
 export default class MusiQJoin extends React.Component {
 
@@ -10,11 +11,26 @@ export default class MusiQJoin extends React.Component {
         super(props);
         this.state = {
             value: '',
+            availableRooms: [],
             found: []
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSearchBar = this.handleSearchBar.bind(this);
+    }
+
+    componentDidMount() {
+        this.roomRef = firebase.database().ref('rooms'); //gets reference to all messages in conversation
+        this.roomRef.on('value', (snapshot) => {
+            if (snapshot.val() != null) {
+                console.log(snapshot.val());
+                this.setState({ availableRooms: snapshot.val() });
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        this.roomRef.off();
     }
 
     handleChange(event) {
@@ -23,13 +39,14 @@ export default class MusiQJoin extends React.Component {
 
     handleSearchBar(event) {
         event.preventDefault();
+        console.log(this.state.availableRooms);
         let arr = ["Test1", "Test2", "Test3", "Test4"];
         let newFound = [];
         let txt = this.state.value;
         for (let i = 0; i < arr.length; i++) {
             if (arr[i].toLowerCase().includes(txt.toLowerCase())) {
                 newFound.push(arr[i]);
-            }
+            } 
         }
         this.setState({ found: newFound });
     }
@@ -52,6 +69,7 @@ export default class MusiQJoin extends React.Component {
                         })}
                     </div>
                 </Form>
+                <div className="hidden"></div>
             </div>
         );
     }
