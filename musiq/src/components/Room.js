@@ -6,6 +6,8 @@ import SpotifyPlayer from 'react-spotify-player';
 import Controller from '../API.js'
 import firebase, { storage } from 'firebase/app';
 
+import SearchResult from './SearchResult';
+
 class MusiQRoom extends Component {
 
     constructor(props) {
@@ -118,20 +120,22 @@ class MusiQRoom extends Component {
                 <h2>Search Results: </h2>
                 {
                     Object.keys(this.state.searchRes).map((objId) => {
-                        return <div>
-                            <p>{this.state.searchRes[objId]["name"]}</p>
-                            <p>{this.state.searchRes[objId]["artist"]}</p>
-                            <Button onClick={() => this.addToQueue(this.state.searchRes[objId])}>Add</Button>
-                        </div>
+                        return <SearchResult
+                        name = {this.state.searchRes[objId]["name"]}
+                        artist = {this.state.searchRes[objId]["artist"]}
+                        callback = {() => this.addToQueue(this.state.searchRes[objId])}
+                        add = {true}
+                        />
                     })
                 }
                 <h2>In Queue: </h2>
                 {
                     Object.keys(this.state.ids).map((objId) => {
-                        return <div>
-                            <p>{this.state.ids[objId]["name"]}</p>
-                            <p>{this.state.ids[objId]["artist"]}</p>
-                        </div>
+                        return <SearchResult
+                        name = {this.state.ids[objId]["name"]}
+                        artist = {this.state.ids[objId]["artist"]}
+                        add = {false}
+                        />
                     })
                 }
 
