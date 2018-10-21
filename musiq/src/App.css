@@ -8,7 +8,7 @@
 }
 
 .form {
-  margin: 10rem 1rem;
+  margin: 4rem 1rem;
   padding: 1.2rem;
   background-color: #B8BEDD;
   display: flex;
@@ -22,13 +22,13 @@
 
 .Home {
   background-color: #F0E6EF;
-  height: 40rem;
+  height: max-content;
   width: auto;
   padding: 1rem;
 }
 
 h1, h1 > #Q {
-  font-size: 8rem;
+  font-size: 6rem;
 }
 
 h1 {
@@ -49,6 +49,10 @@ h1, #subtitle {
   justify-content: center;
   padding-top: 1rem;
   margin-top: 1rem;
+}
+
+.getStartedCard:last-of-type {
+  margin-bottom: 15vh;
 }
 
 #getStartedButton {
@@ -115,4 +119,8 @@ h1, #subtitle {
 
 .roomCards {
   margin: 1rem;
+}
+
+form {
+  padding: 1.2rem;
 }
